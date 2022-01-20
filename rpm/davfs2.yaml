@@ -5,6 +5,7 @@ Release: 0
 Group: System
 License: GPLv3+
 URL: 'https://savannah.nongnu.org/projects/davfs2/'
+SCM: 'https://git.savannah.nongnu.org/git/davfs2.git'
 Sources:
   - 'https://download.savannah.nongnu.org/releases/davfs2/%{name}-%{version}.tar.gz'
   - 'davfs2-rpmlintrc'
@@ -21,15 +22,18 @@ Description: |
     and client certificates.
     %if "%{?vendor}" == "chum"
     PackageName: davfs2
-    PackagerName: nephros
     Type: console-application
+    Custom:
+      PackagingRepo: https://github.com/sailfishos-chum/davfs2
     Categories:
       - Network
-      - System
       - Filesystem
     %endif
 #Requires:
-#PkgBR:
+PkgBR:
+    - autoconf
+    - automake
+    - gettext
 ### make sure all deps of neon are included here, otherwise configure will say the version is incompatible
 PkgConfigBR:
     - dbus-1
@@ -45,6 +49,7 @@ Macros:
   # these are files cached in the plain from some remote server.
   # we put it in /home so they are encrypted and not leakred in the default /var/cache
   - 'dav_cachedir;/home/.system/var/cache/%{name}'
+SetupOptions: -q -n %{name}-%{version}/upstream/
 ConfigOptions:
   - '--enable-largefile'
   - '--disable-nls'

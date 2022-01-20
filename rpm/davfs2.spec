@@ -28,6 +28,9 @@ BuildRequires:  pkgconfig(libssl)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(neon)
 BuildRequires:  pkgconfig(zlib)
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  gettext
 
 %description
 davfs2 is a Linux file system driver that allows you to mount a WebDAV
@@ -40,11 +43,11 @@ davfs2 supports SSL and proxy, HTTP authentication (basic and digest)
 and client certificates.
 %if "%{?vendor}" == "chum"
 PackageName: davfs2
-PackagerName: nephros
 Type: console-application
+Custom:
+  PackagingRepo: https://github.com/sailfishos-chum/davfs2
 Categories:
   - Network
-  - System
   - Filesystem
 %endif
 
@@ -58,7 +61,7 @@ BuildArch:  noarch
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{version}/upstream/
 
 # filelocations.patch
 %patch0 -p1
@@ -71,6 +74,8 @@ BuildArch:  noarch
 sed -i "s#@@rpm_dav_user@@#%{dav_user}#"  etc/davfs2.conf
 sed -i "s#@@rpm_dav_group@@#%{dav_group}#"  etc/davfs2.conf
 sed -i "s#@@rpm_dav_cachedir@@#%{dav_cachedir}#"  etc/davfs2.conf
+
+./bootstrap
 # << build pre
 
 %configure --disable-static \
