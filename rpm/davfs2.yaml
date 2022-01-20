@@ -10,6 +10,11 @@ Sources:
   - 'https://download.savannah.nongnu.org/releases/davfs2/%{name}-%{version}.tar.gz'
   - 'davfs2-rpmlintrc'
 Patches:
+  # patch Makefile.am:
+  # bootstrap uses gnulib-tool, and po4a which we both don't have ATM
+  # also, we don't need documentation anyway on Sailfish OS
+  - 'Makefile.am.patch'
+  # patch the config file so we can later sed-mangle the locations in the .spec
   - 'filelocations.patch'
 Description: |
     davfs2 is a Linux file system driver that allows you to mount a WebDAV
@@ -23,11 +28,13 @@ Description: |
     %if "%{?vendor}" == "chum"
     PackageName: davfs2
     Type: console-application
-    Custom:
-      PackagingRepo: https://github.com/sailfishos-chum/davfs2
     Categories:
       - Network
       - Filesystem
+    Custom:
+      PackagingRepo: https://github.com/sailfishos-chum/davfs2
+    Url:
+      Help: http://savannah.nongnu.org/userguide/
     %endif
 #Requires:
 PkgBR:
@@ -63,15 +70,15 @@ Files:
   - '%{_sbindir}/*'
   - '%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf'
   - '%config(noreplace) %{_sysconfdir}/%{name}/secrets'
-  - '%{_sysconfdir}/%{name}/certs'
+  - '%dir %{_sysconfdir}/%{name}/certs'
   - '%{_datadir}/%{name}'
   - '%{dav_cachedir}'
-SubPackages:
-    - Name:  doc
-      Summary: Documentation for %{name}
-      Group: Documentation
-      BuildArch: noarch
-      AutoDepend: false
-      Files:
-        - '%{_mandir}/*/*'
-        - '%{_docdir}/%{name}'
+#SubPackages:
+#    - Name:  doc
+#      Summary: Documentation for %{name}
+#      Group: Documentation
+#      BuildArch: noarch
+#      AutoDepend: false
+#      Files:
+#        - '%{_mandir}/*/*'
+#        - '%{_docdir}/%{name}'

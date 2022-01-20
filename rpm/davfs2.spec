@@ -20,7 +20,8 @@ URL:        https://savannah.nongnu.org/projects/davfs2/
 Source0:    https://download.savannah.nongnu.org/releases/davfs2/%{name}-%{version}.tar.gz
 Source1:    davfs2-rpmlintrc
 Source100:  davfs2.yaml
-Patch0:     filelocations.patch
+Patch0:     Makefile.am.patch
+Patch1:     filelocations.patch
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(libcrypto)
 BuildRequires:  pkgconfig(libproxy-1.0)
@@ -52,19 +53,13 @@ Categories:
 %endif
 
 
-%package doc
-Summary:    Documentation for %{name}
-Group:      Documentation
-BuildArch:  noarch
-
-%description doc
-%{summary}.
-
 %prep
 %setup -q -n %{name}-%{version}/upstream/
 
-# filelocations.patch
+# Makefile.am.patch
 %patch0 -p1
+# filelocations.patch
+%patch1 -p1
 # >> setup
 # << setup
 
@@ -74,8 +69,15 @@ BuildArch:  noarch
 sed -i "s#@@rpm_dav_user@@#%{dav_user}#"  etc/davfs2.conf
 sed -i "s#@@rpm_dav_group@@#%{dav_group}#"  etc/davfs2.conf
 sed -i "s#@@rpm_dav_cachedir@@#%{dav_cachedir}#"  etc/davfs2.conf
-
-./bootstrap
+# commands from ./bootstrap, but without the gettext and gnulib stuff
+rm config/gnulib-cache.m4
+autopoint --force
+aclocal -I config
+autoheader
+automake --add-missing --force-missing --copy
+autoconf
+cp -p config/COPYING.davfs2 COPYING
+cp -p config/INSTALL.davfs2 INSTALL
 # << build pre
 
 %configure --disable-static \
@@ -98,6 +100,9 @@ rm -rf %{buildroot}
 
 # >> install post
 install -d -m 755 %{buildroot}%{dav_cachedir}
+# we don't  need the docs
+rm -rf %{buildroot}%{_mandir}
+rm -rf %{buildroot}%{_docdir}/%{name}
 # << install post
 
 %files
@@ -106,15 +111,8 @@ install -d -m 755 %{buildroot}%{dav_cachedir}
 %{_sbindir}/*
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/%{name}/secrets
-%{_sysconfdir}/%{name}/certs
+%dir %{_sysconfdir}/%{name}/certs
 %{_datadir}/%{name}
 %{dav_cachedir}
 # >> files
 # << files
-
-%files doc
-%defattr(-,root,root,-)
-%{_mandir}/*/*
-%{_docdir}/%{name}
-# >> files doc
-# << files doc
