@@ -1,0 +1,7 @@
+# user-called mount programs are setuid, that's how they work...
+addFilter("davfs2.* setuid-binary /usr/sbin/mount.davfs root 4755")
+addFilter("davfs2.* non-standard-executable-perm /usr/sbin/mount.davfs 4755")
+addFilter("davfs2.* non-standard-dir-perm /etc/davfs2/certs/private 700")
+addFilter("davfs2.* non-readable /etc/davfs2/secrets 600")
+# see comments in yaml file on why we use /home
+addFilter("davfs2.* dir-or-file-in-home /home/.system/var/cache/davfs2.*")

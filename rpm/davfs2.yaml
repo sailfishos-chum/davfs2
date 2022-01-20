@@ -1,0 +1,72 @@
+Name: davfs2
+Summary: Linux FUSE driver that allows you to mount a WebDAV resource
+Version: 1.6.1
+Release: 0
+Group: System
+License: GPLv3+
+URL: 'https://savannah.nongnu.org/projects/davfs2/'
+Sources:
+  - 'https://download.savannah.nongnu.org/releases/davfs2/%{name}-%{version}.tar.gz'
+  - 'davfs2-rpmlintrc'
+Patches:
+  - 'filelocations.patch'
+Description: |
+    davfs2 is a Linux file system driver that allows you to mount a WebDAV
+    resource into your Unix file system tree. So - and that is what makes
+    davfs2 different - applications can use it without knowing about WebDAV.
+    You may edit WebDAV resources using standard applications that interact
+    with the file system as usual.
+
+    davfs2 supports SSL and proxy, HTTP authentication (basic and digest)
+    and client certificates.
+    %if "%{?vendor}" == "chum"
+    PackageName: davfs2
+    PackagerName: nephros
+    Type: console-application
+    Categories:
+      - Network
+      - System
+      - Filesystem
+    %endif
+#Requires:
+#PkgBR:
+### make sure all deps of neon are included here, otherwise configure will say the version is incompatible
+PkgConfigBR:
+    - dbus-1
+    - libcrypto
+    - libproxy-1.0
+    - libssl
+    - libxml-2.0
+    - neon
+    - zlib
+Macros:
+  - 'dav_group;mount'
+  - 'dav_user;mount'
+  # these are files cached in the plain from some remote server.
+  # we put it in /home so they are encrypted and not leakred in the default /var/cache
+  - 'dav_cachedir;/home/.system/var/cache/%{name}'
+ConfigOptions:
+  - '--enable-largefile'
+  - '--disable-nls'
+  - 'dav_group=%{dav_group}'
+  - 'dav_user=%{dav_user}'
+  - 'dav_syscachedir=%{dav_cachedir}'
+
+Files:
+  # is there a macro for /sbin?
+  - '/sbin/*'
+  - '%{_sbindir}/*'
+  - '%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf'
+  - '%config(noreplace) %{_sysconfdir}/%{name}/secrets'
+  - '%{_sysconfdir}/%{name}/certs'
+  - '%{_datadir}/%{name}'
+  - '%{dav_cachedir}'
+SubPackages:
+    - Name:  doc
+      Summary: Documentation for %{name}
+      Group: Documentation
+      BuildArch: noarch
+      AutoDepend: false
+      Files:
+        - '%{_mandir}/*/*'
+        - '%{_docdir}/%{name}'

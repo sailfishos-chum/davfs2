@@ -1,0 +1,32 @@
+--- a/etc/davfs2.conf	2021-09-07 09:43:10.866883040 +0200
++++ b/etc/davfs2.conf	2021-09-07 09:45:33.052233527 +0200
+@@ -19,8 +19,8 @@
+ # General Options
+ # ---------------
+ 
+-# dav_user        davfs2            # system wide config file only
+-# dav_group       davfs2            # system wide config file only
++dav_user        @@rpm_dav_user@@             # system wide config file only
++dav_group       @@rpm_dav_group@@            # system wide config file only
+ # buf_size        16                 # KiByte
+ 
+ # WebDAV Related Options
+@@ -32,7 +32,7 @@
+ # servercert                        # deprecated: use trust_ca_cert
+ # trust_server_cert
+ # clientcert
+-# secrets         ~/.davfs2/secrets # user config file only
++# secrets         ~/.config/davfs2/secrets # user config file only
+ # ask_auth        1
+ # use_locks       1
+ # lock_owner      <user-name>
+@@ -60,7 +60,8 @@
+ 
+ # backup_dir      lost+found
+ # cache_dir       /var/cache/davfs2 # system wide cache
+-#                 ~/.davfs2/cache   # per user cache
++cache_dir         @@rpm_dav_cachedir@@ # system wide cache
++# cache_dir       ~/.cache/davfs2   # per user cache
+ # cache_size      50                # MiByte
+ # table_size      1024
+ # dir_refresh     60                # seconds
