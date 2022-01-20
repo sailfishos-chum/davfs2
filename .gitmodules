@@ -1,0 +1,4 @@
+[submodule "upstream"]
+	path = upstream
+	url = https://git.savannah.nongnu.org/git/davfs2.git
+	branch = main
