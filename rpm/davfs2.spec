@@ -78,7 +78,6 @@ sed -i "s#@@rpm_dav_user@@#%{dav_user}#"  etc/davfs2.conf
 sed -i "s#@@rpm_dav_group@@#%{dav_group}#"  etc/davfs2.conf
 sed -i "s#@@rpm_dav_cachedir@@#%{dav_cachedir}#"  etc/davfs2.conf
 # commands from ./bootstrap, but without the gettext and gnulib stuff
-rm config/gnulib-cache.m4
 autopoint --force
 aclocal -I config
 autoheader
