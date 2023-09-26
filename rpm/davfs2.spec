@@ -111,8 +111,9 @@ install -d -m 755 %{buildroot}%{dav_cachedir}
 rm -rf %{buildroot}%{_mandir}
 rm -rf %{buildroot}%{_docdir}/%{name}
 # SFOS mount utility does not look in /usr/sbin:
-ln -s %{buildroot}%{_sbindir}/mount.davfs /sbin/mount.davfs
-ln -s %{buildroot}%{_sbindir}/umount.davfs /sbin/umount.davfs
+mkdir -p %{buildroot}/sbin
+ln -s %{_sbindir}/mount.davfs %{buildroot}/sbin/mount.davfs
+ln -s %{_sbindir}/umount.davfs %{buildroot}/sbin/umount.davfs
 # << install post
 
 %files
