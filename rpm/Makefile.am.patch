@@ -1,16 +1,13 @@
 diff --git a/Makefile.am b/Makefile.am
-index 66d757b..cd07035 100644
+index 335b3c5..7924dd2 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -20,9 +20,8 @@
- ## Process this file with automake to produce Makefile.in
+@@ -21,7 +21,7 @@
  
  EXTRA_DIST = bootstrap BUGS FAQ README.translators \
--             config/COPYING.davfs2 config/INSTALL.davfs2 \
--             config/gnulib-cache.m4
--SUBDIRS = gl glpo po etc man src
-+             config/COPYING.davfs2 config/INSTALL.davfs2
-+SUBDIRS = po etc src
+              config/COPYING.davfs2 config/INSTALL.davfs2
+-SUBDIRS = po etc man src
++SUBDIRS = etc src
  ACLOCAL_AMFLAGS = -I config
  doc_DATA = AUTHORS BUGS ChangeLog COPYING FAQ INSTALL NEWS README \
             README.translators THANKS TODO
