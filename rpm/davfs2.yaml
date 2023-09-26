@@ -70,7 +70,7 @@ ConfigOptions:
   - 'dav_group=%{dav_group}'
   - 'dav_user=%{dav_user}'
   - 'dav_syscachedir=%{dav_cachedir}'
-
+Builder: none
 Files:
   - '%{_sbindir}/*'
   - '%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf'

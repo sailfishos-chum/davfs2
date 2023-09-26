@@ -94,16 +94,16 @@ cp -p config/INSTALL.davfs2 INSTALL
     dav_user=%{dav_user} \
     dav_syscachedir=%{dav_cachedir}
 
-make %{?_smp_mflags}
 
 # >> build post
+%make_build
 # << build post
 
 %install
 rm -rf %{buildroot}
 # >> install pre
-# << install pre
 %make_install
+# << install pre
 
 # >> install post
 install -d -m 755 %{buildroot}%{dav_cachedir}
