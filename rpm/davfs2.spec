@@ -42,14 +42,22 @@ with the file system as usual.
 
 davfs2 supports SSL and proxy, HTTP authentication (basic and digest)
 and client certificates.
-%if "%{?vendor}" == "chum"
-PackageName: davfs2
+
+%if 0%{?_chum}
+Title: davfs2
 Type: console-application
-Custom:
-  PackagingRepo: https://github.com/sailfishos-chum/davfs2
+DeveloperName: Ali Abdallah
+PackagedBy: nephros
 Categories:
   - Network
   - Filesystem
+Custom:
+  Repo: https://git.savannah.nongnu.org/git/davfs2.git
+  PackagingRepo: https://github.com/sailfishos-chum/davfs2
+Links:
+  Homepage: %{url}
+  Help: https://forum.sailfishos.org/search?q=davfs%20order%3Alikes
+  Bugtracker: https://savannah.nongnu.org/bugs/?group=davfs2&func=browse&set=open
 %endif
 
 
