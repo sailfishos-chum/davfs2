@@ -1,6 +1,6 @@
 Name: davfs2
 Summary: Linux FUSE driver that allows you to mount a WebDAV resource
-Version: 1.6.1
+Version: 1.7.1
 Release: 0
 Group: System
 License: GPLv3+

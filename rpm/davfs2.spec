@@ -12,7 +12,7 @@ Name:       davfs2
 %define dav_cachedir /home/.system/var/cache/%{name}
 
 Summary:    Linux FUSE driver that allows you to mount a WebDAV resource
-Version:    1.6.1
+Version:    1.7.1
 Release:    0
 Group:      System
 License:    GPLv3+
