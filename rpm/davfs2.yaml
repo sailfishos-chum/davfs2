@@ -72,6 +72,8 @@ ConfigOptions:
   - 'dav_syscachedir=%{dav_cachedir}'
 Builder: none
 Files:
+  # is there a macro for /sbin?
+  - '/sbin/*'
   - '%{_sbindir}/*'
   - '%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf'
   - '%config(noreplace) %{_sysconfdir}/%{name}/secrets'

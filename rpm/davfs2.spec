@@ -114,6 +114,7 @@ rm -rf %{buildroot}%{_docdir}/%{name}
 
 %files
 %defattr(-,root,root,-)
+/sbin/*
 %{_sbindir}/*
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/%{name}/secrets
